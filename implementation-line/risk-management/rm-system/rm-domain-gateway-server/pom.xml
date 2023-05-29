@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>systems</artifactId>
+		<groupId>org.cybnity.application.risk-management</groupId>
+		<version>${revision}</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<groupId>org.cybnity.application.risk-management.system</groupId>
+	<artifactId>domain-gateway-server</artifactId>
+	<version>${revision}</version>
+	<packaging>jar</packaging>
+	<name>-- RM domain gateway impl module</name>
+
+	<properties>
+		<main.verticle>org.cybnity.application.risk_management.domain.system.gateway.RiskManagementDomainIOGateway</main.verticle>
+		<module.system.image.name>risk-management-domain-gateway</module.system.image.name>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

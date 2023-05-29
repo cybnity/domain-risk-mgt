@@ -1,0 +1,100 @@
+# Main AUTOMATED ACCEPTANCE TEST STAGE workflow regarding the java projects
+name: Project Quality Acceptance (AAT STAGE)
+run-name: AAT STAGE - Components technical quality acceptance
+on:
+  push:
+    branches:
+      - 'staging*'
+    paths:
+      - '.github/workflows/software-project-aat.yml'
+      - '.github/workflows/check-project-technical-quality.yml'
+      - '.github/workflows/check-project-integration-quality.yml'
+      - '!**/*.md'
+  pull_request_target:
+    # when a pull request merges, the pull request is automatically closed (so check the merged state)
+    types: [closed]
+    branches:
+      - 'staging*'
+    paths:
+      - '**'
+      - '!.git/**'
+      - '.github/workflows/**'
+
+# The commit stage workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  define_project_release_name:
+    name: Release name preparation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      release_name: ${{ env.release_name }}
+      is_snapshot: ${{ env.is_snapshot }}
+    steps:
+      - name: Check existing tagged version name
+        if: ${{ github.event.release.tag_name != '' }}
+        # Read the release name defined into the GitHub project
+        run: |
+          echo The current release tag is ${{ github.event.release.tag_name }}
+          echo "TAG_VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          echo "is_snapshot=${{ contains(github.event.release.tag_name, 'snapshot') || contains(github.event.release.tag_name, 'reviewed') }}" >> $GITHUB_ENV
+
+      - name: Set the release name of the project based on GitHub tag name
+        if: ${{ env.TAG_VERSION != '' }}
+        run : |
+            echo "Define the final version identifier from the GitHub project's current tag name"
+            echo "release_name=$TAG_VERSION" >> $GITHUB_ENV
+            echo "Development version type is detected from the GitHub tag name as ${{ env.is_snapshot }}"
+
+      # Build specific release name because none tag is existing on GitHub project
+      - name: Identify reusable environment variables about current commit
+        if: ${{ env.TAG_VERSION == '' }}
+        uses: FranzDiebold/github-env-vars-action@v2.7.0
+
+      # Build name based on a potential included tag (e.g staging0.0.7-reviewed, staging-alpha, staging)
+      - name: Define a latest revision name regarding integrated development version
+        if: ${{ env.TAG_VERSION == '' }}
+        run: |
+            echo "Git commit revision $CI_SHA_SHORT abbreviation based on 7 characters (default) maximum (origin based: $CI_SHA)"
+            echo "COMMIT_ID=$CI_SHA_SHORT" >> $GITHUB_ENV
+            echo "release_name=$CI_ACTION_REF_NAME_SLUG-latest-SNAPSHOT" >> $GITHUB_ENV
+            echo "is_snapshot=true" >> $GITHUB_ENV
+            echo "Integrated development version type is defined as a staging snapshot version ($CI_ACTION_REF_NAME_SLUG-latest-SNAPSHOT)"
+
+  # Verify the technical and static quality of the version source codes (e.g java components, docker image templates...)
+  check_technical_quality:
+    name: Technical quality check
+    if: success()
+    needs: [define_project_release_name]
+    uses: ./.github/workflows/check-project-technical-quality.yml
+    with:
+      config-path: ${{ inputs.branch_name }}
+      package_release_name: ${{ needs.define_project_release_name.outputs.release_name }}
+    secrets: inherit
+
+  # Prepare only a snapshot latest version for remote repository installation
+  publish_latest_integrated_version_to_snapshot_remote_repository:
+    name: Latest version publishing
+    # Publish not tagged snapshot version but as a common name equals to latest version of staging branch available for other domain application projects managed in other repositories
+    if: ${{ success()
+          && needs.define_project_release_name.outputs.is_snapshot == 'true'
+          && needs.define_project_release_name.outputs.release_name != ''
+          }}
+    needs: [define_project_release_name, check_technical_quality]
+    uses: ./.github/workflows/publish-java-packages-version-to-repository.yml
+    with:
+      config-path: ${{ inputs.branch_name }}
+      target_repository: SNAPSHOT
+      package_release_name: ${{ needs.define_project_release_name.outputs.release_name }}
+    secrets: inherit
+
+  # Verify the integration quality of the version only on merged PR
+  check_integration_quality:
+    name: Integration quality check
+    if: success() && github.event.pull_request.merged == true
+    needs: [define_project_release_name, publish_latest_integrated_version_to_snapshot_remote_repository]
+    uses: ./.github/workflows/check-project-integration-quality.yml
+    with:
+      config-path: ${{ inputs.branch_name }}
+      package_release_name: ${{ needs.define_project_release_name.outputs.release_name }}
+    secrets: inherit
