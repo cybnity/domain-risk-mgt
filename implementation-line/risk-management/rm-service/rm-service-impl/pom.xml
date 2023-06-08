@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>service</artifactId>
@@ -11,4 +13,10 @@
 	<version>${revision}</version>
 	<packaging>jar</packaging>
 	<name>-- RM service impl</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.cybnity.feature.domain</groupId>
+			<artifactId>security-activity-orchestration</artifactId>
+		</dependency>
+	</dependencies>
 </project>

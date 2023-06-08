@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.cybnity</groupId>
@@ -16,10 +18,12 @@
 		<revision>0.1.0</revision>
 		<!-- CYBNITY Foundation dependencies link-->
 		<foundation.compatibility.version>staging-latest-SNAPSHOT</foundation.compatibility.version>
-		<!-- Standard Trusted Execution Environment (TEE) of java runtime container template -->
+		<!-- Standard Trusted Execution Environment (TEE) of java runtime
+		container template -->
 		<docker.java.tee.image.name>cybnity/jre-tee</docker.java.tee.image.name>
 		<!-- NodeJS container template (Bullseye or buster based on Debian)-->
-		<!-- See https://snyk.io/blog/choosing-the-best-node-js-docker-image/ for choice of containerized NodeJS versions -->
+		<!-- See https://snyk.io/blog/choosing-the-best-node-js-docker-image/
+		for choice of containerized NodeJS versions -->
 		<docker.nodejs.image.name>node:16.17.0-bullseye</docker.nodejs.image.name>
 	</properties>
 
@@ -36,6 +40,12 @@
 				<artifactId>support</artifactId>
 				<scope>compile</scope>
 				<version>${foundation.compatibility.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.cybnity.feature.domain</groupId>
+				<artifactId>security-activity-orchestration</artifactId>
+				<version>${foundation.compatibility.version}</version>
+				<scope>compile</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -68,11 +78,13 @@
 		</profile>
 
 		<profile>
-			<!-- Build regarding a development version on shared development platform -->
+			<!-- Build regarding a development version on shared development
+			platform -->
 			<id>dev-deploy-environment</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Denvironment=dev-deploy) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Denvironment=dev-deploy) -->
 					<name>environment</name>
 					<value>dev-deploy</value>
 				</property>
@@ -95,7 +107,8 @@
 			<id>qa-environment</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Denvironment=qa) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Denvironment=qa) -->
 					<name>environment</name>
 					<value>qa</value>
 				</property>
@@ -110,7 +123,8 @@
 			<id>commit-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Dstage=commit) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Dstage=commit) -->
 					<name>stage</name>
 					<value>commit</value>
 				</property>
@@ -132,7 +146,8 @@
 			<id>technical-quality-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Dstage=technical-quality) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Dstage=technical-quality) -->
 					<name>stage</name>
 					<value>technical-quality</value>
 				</property>
@@ -163,7 +178,8 @@
 								<goals>
 									<!-- Try to resolve all test scope -->
 									<goal>resolve</goal>
-									<!-- Try to resolve plugins and optionnaly their dependencies -->
+									<!-- Try to resolve plugins and optionnaly
+									their dependencies -->
 									<goal>resolve-plugins</goal>
 								</goals>
 							</execution>
@@ -171,7 +187,8 @@
 								<id>analyze-dependencies</id>
 								<phase>validate</phase>
 								<goals>
-									<!-- Determine missing or unused dependencies -->
+									<!-- Determine missing or unused
+									dependencies -->
 									<goal>analyze-dep-mgt</goal>
 									<goal>analyze-duplicate</goal>
 								</goals>
@@ -180,12 +197,15 @@
 								<id>report-tree</id>
 								<phase>validate</phase>
 								<configuration>
-										<outputFile>mpp-official-version-pom-tree.txt</outputFile>
-										<outputType>text</outputType>
-										<appendOutput>false</appendOutput>
+									<outputFile>
+										mpp-official-version-pom-tree.txt</outputFile>
+									<outputType>text</outputType>
+									<appendOutput>false</appendOutput>
 								</configuration>
 								<goals>
-									<!-- Show the dependency hierarchy of the project and dependencies versions managed by the parent pom.xml -->
+									<!-- Show the dependency hierarchy of the
+									project and dependencies versions managed by
+									the parent pom.xml -->
 									<goal>tree</goal>
 								</goals>
 							</execution>
@@ -196,11 +216,13 @@
 		</profile>
 
 		<profile>
-			<!-- Phase of integration quality validation of a software version (e.g on an test environment) -->
+			<!-- Phase of integration quality validation of a software version
+			(e.g on an test environment) -->
 			<id>integration-quality-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Dstage=integration-quality) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Dstage=integration-quality) -->
 					<name>stage</name>
 					<value>integration-quality</value>
 				</property>
@@ -219,11 +241,13 @@
 		</profile>
 
 		<profile>
-			<!-- Step of software behavior validation by testers community (e.g regarding a software beta release) -->
+			<!-- Step of software behavior validation by testers community (e.g
+			regarding a software beta release) -->
 			<id>user-acceptance-test-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command line with -Dstage=user-acceptance-test) -->
+					<!-- Activation based on -D system property (e.g command
+					line with -Dstage=user-acceptance-test) -->
 					<name>stage</name>
 					<value>user-acceptance-test</value>
 				</property>
