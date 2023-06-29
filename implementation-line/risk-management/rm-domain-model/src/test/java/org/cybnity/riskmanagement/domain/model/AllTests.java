@@ -11,5 +11,6 @@ import org.junit.platform.suite.api.Suite;
  *
  */
 @Suite
+@SelectClasses({ RunCucumberTest.class })
 public class AllTests {
 }
