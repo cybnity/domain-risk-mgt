@@ -42,12 +42,6 @@
 				<scope>compile</scope>
 				<version>${foundation.compatibility.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.cybnity.feature.domain</groupId>
-				<artifactId>security-activity-orchestration</artifactId>
-				<version>${foundation.compatibility.version}</version>
-				<scope>compile</scope>
-			</dependency>
 
             <dependency>
                 <groupId>org.junit</groupId>

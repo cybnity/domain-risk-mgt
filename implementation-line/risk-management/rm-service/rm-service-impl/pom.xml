@@ -13,10 +13,4 @@
 	<version>${revision}</version>
 	<packaging>jar</packaging>
 	<name>-- RM service impl</name>
-	<dependencies>
-		<dependency>
-			<groupId>org.cybnity.feature.domain</groupId>
-			<artifactId>security-activity-orchestration</artifactId>
-		</dependency>
-	</dependencies>
 </project>
