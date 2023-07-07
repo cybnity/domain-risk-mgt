@@ -22,7 +22,6 @@
 		<dependency>
 			<groupId>org.cybnity.feature.domain</groupId>
 			<artifactId>defense-template</artifactId>
-			<version>${revision}</version>
 		</dependency>
 	</dependencies>
 

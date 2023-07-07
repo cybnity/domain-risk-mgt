@@ -42,7 +42,11 @@
 				<scope>compile</scope>
 				<version>${foundation.compatibility.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.cybnity.feature.domain</groupId>
+				<artifactId>defense-template</artifactId>
+				<version>${foundation.compatibility.version}</version>
+			</dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
