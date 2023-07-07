@@ -2,7 +2,8 @@
 The space presents the design view of the developed components.
 
 # DESIGN VIEW
-Several structural patterns are supporting the risk management domain and are reusable for coding of software elements (e.g aggregate, value objects).
+Several structural patterns are supporting the risk management domain and are reusable for coding of software elements (e.g aggregate, value objects):
+- [Risk management framework](risk-management-framework.md) about risk management
 
 ## STRUCTURE MODELS
 Presentation of the design view of the `org.cybnity.riskmanagement` main project's artifacts package.
