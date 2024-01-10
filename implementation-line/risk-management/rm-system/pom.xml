@@ -23,8 +23,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>io.vertx</groupId>
-			<artifactId>vertx-web</artifactId>
+			<groupId>org.cybnity.framework</groupId>
+			<artifactId>vertx-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.vertx</groupId>

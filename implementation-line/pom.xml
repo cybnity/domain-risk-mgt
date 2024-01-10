@@ -43,8 +43,15 @@
 				<version>${foundation.compatibility.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.cybnity.framework</groupId>
+				<artifactId>vertx-common</artifactId>
+				<scope>compile</scope>
+				<version>${foundation.compatibility.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.cybnity.feature.domain</groupId>
 				<artifactId>defense-template</artifactId>
+				<scope>compile</scope>
 				<version>${foundation.compatibility.version}</version>
 			</dependency>
             <dependency>
