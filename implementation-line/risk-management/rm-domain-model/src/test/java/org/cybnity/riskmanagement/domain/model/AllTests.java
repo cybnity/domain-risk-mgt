@@ -1,6 +1,5 @@
 package org.cybnity.riskmanagement.domain.model;
 
-import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 /**
@@ -11,5 +10,6 @@ import org.junit.platform.suite.api.Suite;
  *
  */
 @Suite
+//@SelectClasses({ RunCucumberTest.class })
 public class AllTests {
 }
