@@ -8,11 +8,13 @@
 		<version>${revision}</version>
 		<relativePath>..</relativePath>
 	</parent>
+
 	<groupId>org.cybnity</groupId>
-	<artifactId>applications-impl</artifactId>
+	<artifactId>risk-mgt-applications-impl</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>CYBNITY RISK MANAGEMENT APPLICATION</name>
+
 	<properties>
 		<!-- CYBNITY project default revision -->
 		<revision>0.1.0</revision>
@@ -91,7 +93,7 @@
 
 	<profiles>
 		<profile>
-			<!-- Build regarding a development version on developer station -->
+			<!-- Developer workstation environment -->
 			<id>localhost</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -110,13 +112,11 @@
 		</profile>
 
 		<profile>
-			<!-- Build regarding a development version on shared development
-			platform -->
+			<!-- Shared development platform between developers -->
 			<id>dev-deploy-environment</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Denvironment=dev-deploy) -->
+					<!-- Activation based on -D system property (e.g command line with -Denvironment=dev-deploy) -->
 					<name>environment</name>
 					<value>dev-deploy</value>
 				</property>
@@ -135,12 +135,11 @@
 		</profile>
 
 		<profile>
-			<!-- Build regarding a qualification version on test environment -->
+			<!-- Test environment -->
 			<id>qa-environment</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Denvironment=qa) -->
+					<!-- Activation based on -D system property (e.g command line with -Denvironment=qa) -->
 					<name>environment</name>
 					<value>qa</value>
 				</property>
@@ -169,8 +168,7 @@
 			<id>commit-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Dstage=commit) -->
+					<!-- Activation based on -D system property (e.g command line with -Dstage=commit) -->
 					<name>stage</name>
 					<value>commit</value>
 				</property>
@@ -202,12 +200,11 @@
 		</profile>
 
 		<profile>
-			<!-- Build regarding a technical quality stage -->
+			<!-- Phase of technical quality validation of a software version -->
 			<id>technical-quality-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Dstage=technical-quality) -->
+					<!-- Activation based on -D system property (e.g command line with -Dstage=technical-quality) -->
 					<name>stage</name>
 					<value>technical-quality</value>
 				</property>
@@ -248,8 +245,7 @@
 								<goals>
 									<!-- Try to resolve all test scope -->
 									<goal>resolve</goal>
-									<!-- Try to resolve plugins and optionnaly
-									their dependencies -->
+									<!-- Try to resolve plugins and optionnaly their dependencies -->
 									<goal>resolve-plugins</goal>
 								</goals>
 							</execution>
@@ -257,8 +253,7 @@
 								<id>analyze-dependencies</id>
 								<phase>validate</phase>
 								<goals>
-									<!-- Determine missing or unused
-									dependencies -->
+									<!-- Determine missing or unused dependencies -->
 									<goal>analyze-dep-mgt</goal>
 									<goal>analyze-duplicate</goal>
 								</goals>
@@ -267,15 +262,12 @@
 								<id>report-tree</id>
 								<phase>validate</phase>
 								<configuration>
-									<outputFile>
-										mpp-official-version-pom-tree.txt</outputFile>
-									<outputType>text</outputType>
-									<appendOutput>false</appendOutput>
+										<outputFile>mpp-official-version-pom-tree.txt</outputFile>
+										<outputType>text</outputType>
+										<appendOutput>false</appendOutput>
 								</configuration>
 								<goals>
-									<!-- Show the dependency hierarchy of the
-									project and dependencies versions managed by
-									the parent pom.xml -->
+									<!-- Show the dependency hierarchy of the project and dependencies versions managed by the parent pom.xml -->
 									<goal>tree</goal>
 								</goals>
 							</execution>
@@ -286,13 +278,11 @@
 		</profile>
 
 		<profile>
-			<!-- Phase of integration quality validation of a software version
-			(e.g on an test environment) -->
+			<!-- Phase of integration quality validation of a software version (e.g on an test environment) -->
 			<id>integration-quality-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Dstage=integration-quality) -->
+					<!-- Activation based on -D system property (e.g command line with -Dstage=integration-quality) -->
 					<name>stage</name>
 					<value>integration-quality</value>
 				</property>
@@ -325,18 +315,15 @@
 		</profile>
 
 		<profile>
-			<!-- Step of software behavior validation by testers community (e.g
-			regarding a software beta release) -->
+			<!-- Step of software behavior validation by testers community (e.g regarding a software beta release) -->
 			<id>user-acceptance-test-stage</id>
 			<activation>
 				<property>
-					<!-- Activation based on -D system property (e.g command
-					line with -Dstage=user-acceptance-test) -->
+					<!-- Activation based on -D system property (e.g command line with -Dstage=user-acceptance-test) -->
 					<name>stage</name>
 					<value>user-acceptance-test</value>
 				</property>
 			</activation>
 		</profile>
-
 	</profiles>
 </project>
