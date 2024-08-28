@@ -9,7 +9,7 @@
 	<artifactId>applications</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
-	<name>CYBNITY risk management application</name>
+	<name>CYBNITY risk management domain</name>
 
 	<!-- Required informations for Maven Central Repository publishing -->
 	<description>Cyber risks management features of the CYBNITY defense platform solution</description>
